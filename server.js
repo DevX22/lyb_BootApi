@@ -5,6 +5,7 @@ const http = require("http");
 const server = http.createServer(app);
 const request = require("request");
 const manageWit = require("./middleware");
+const responseBoot = require("./boot");
 
 var Table = require("cli-table");
 
@@ -42,44 +43,20 @@ io.on("connection", (socket)=>{
   socket.on("disconnect",()=>{
     console.log("Usuario desconectado");
   });
-  socket.on("ask", (data) => {
-    witCliente.message(data["msg"]).then((server)=>{
-      let entities=[{name:"undefined"}], traits=[{value: "undefined"}], txt, inicio, fin;
-      if(JSON.stringify(server.entities)=='{}'){
-      }else{
-        txt = JSON.stringify(server.entities);
-        inicio = txt.indexOf("[");
-        fin = txt.indexOf("]")+1;
-        txt = txt.substring(inicio,fin);
-        entities = JSON.parse(txt);
-      }
-      if(JSON.stringify(server.traits)=='{}'){
-      }else{
-        txt = JSON.stringify(server.traits);
-        inicio = txt.indexOf("[");
-        fin = txt.indexOf("]")+1;
-        txt = txt.substring(inicio,fin);
-        traits = JSON.parse(txt);
-      }
-
-      tableChat.push(
-        {"User":server.text},
-        {"entities":entities[0]["name"]},
-        {"intents":server.intents[0]["name"]},
-        {"traits":traits[0]["value"]}
-      )
-      if(JSON.stringify(server.entities)=='{}'||JSON.stringify(server.traits)=='{}'){
-        io.emit("res",{
-          msg: server.intents
-        });
-      }else{
-        io.emit("res",{
-          msg:server.intents[0]["name"]
-        });
-      }
-      console.log(tableChat.toString());
-      console.log(server.intents);
-    });
+  socket.on("ask", async (data) => {
+    let responseWit = await manageWit(data["msg"]);
+    let serverResponse = await responseBoot(responseWit);
+    tableChat.push(
+      {"User":JSON.stringify(responseWit["text"])},
+      {"entities":JSON.stringify(responseWit["entities"])},
+      {"intents":JSON.stringify(responseWit["intents"])},
+      {"traits":JSON.stringify(responseWit["traits"])},
+      {"server": serverResponse}
+    );
+    console.log(tableChat.toString());
+    socket.emit("res",{
+      msg:serverResponse
+    })
   });
 });
 
