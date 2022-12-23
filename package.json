@@ -1,0 +1,18 @@
+{
+  "name": "chat-bot",
+  "version": "1.0.0",
+  "description": "chat-boot para el soporte al cliente",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "DevX, Pao",
+  "license": "ISC",
+  "dependencies": {
+    "cli-table": "^0.3.11",
+    "express": "^4.18.2",
+    "node-wit": "^6.5.1",
+    "request": "^2.88.2",
+    "socket.io": "4.5.4"
+  }
+}

@@ -1,0 +1,51 @@
+#################################
+# Compiled source               #
+#################################
+build
+/dist
+out
+media/**/*.css
+
+#################################
+# Node.JS & VSCode files        #
+#################################
+node_modules
+.dccache
+.vscode-test
+.yalc
+npm-debug.log
+yalc.lock
+yarn-error.log
+*.vsix
+
+#################################
+# IDE generated files           #
+#################################
+.idea/
+*.iml
+
+#################################
+# Logs and temp files           #
+#################################
+*.log
+*.swp
+*~
+
+#################################
+# OS generated files            #
+#################################
+Thumbs.db
+.directory
+.DS_Store
+
+#################################
+# Snyk CLI                      #
+#################################
+snyk-macos
+snyk-win.exe
+snyk-linux
+
+#################################
+# Configuration                 #
+#################################
+snyk.config.local.json
