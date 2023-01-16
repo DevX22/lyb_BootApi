@@ -1,6 +1,6 @@
 FROM node:18.12.1
 
-WORKDIR /usr/sec/app
+WORKDIR /usr/src/app
 
 COPY . .
 
