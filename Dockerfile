@@ -4,6 +4,8 @@ WORKDIR /usr/src/app
 
 COPY . .
 
+RUN npm ci
+
 EXPOSE 3200
 
 CMD ["npm", "run", "start"]
