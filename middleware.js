@@ -8,11 +8,13 @@ const witClient = new Wit({
 module.exports = async(msg) => {
   let response = await witClient.message(msg);
   let witTraits = [];
+  let witTraitsValue = [];
   let witIntents = [];
   let witEntities = [];
 
   for(let t in response["traits"]){
     witTraits.push(t);
+    witTraitsValue.push(response["traits"][t].map(i=>i["value"])); 
   }
 
   witIntents = response["intents"].map(n=>n["name"]);
@@ -37,6 +39,7 @@ module.exports = async(msg) => {
   return {
     "text":response.text,
     "traits":witTraits,
+    "traitsValue": witTraitsValue,
     "intents":witIntents,
     "entities":witEntities[0]["name"],
     "wit": response
